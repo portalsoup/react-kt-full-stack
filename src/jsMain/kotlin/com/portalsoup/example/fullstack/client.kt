@@ -1,4 +1,6 @@
-import counter.app
+package com.portalsoup.example.fullstack
+
+import com.portalsoup.example.fullstack.counter.app
 import react.dom.render
 import kotlinx.browser.document
 import kotlinx.browser.window
@@ -7,8 +9,8 @@ import redux.RAction
 import redux.compose
 import redux.createStore
 import redux.rEnhancer
-import counter.reducers.State
-import counter.reducers.combinedReducers
+import com.portalsoup.example.fullstack.counter.reducers.State
+import com.portalsoup.example.fullstack.counter.reducers.combinedReducers
 
 val store = createStore<State, RAction, dynamic>(
     combinedReducers(), State(), compose(

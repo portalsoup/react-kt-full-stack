@@ -1,8 +1,8 @@
-package counter.reducers
+package com.portalsoup.example.fullstack.counter.reducers
 
 import redux.RAction
-import counter.actions.CountActions
-import counter.actions.CountState
+import com.portalsoup.example.fullstack.counter.actions.CountActions
+import com.portalsoup.example.fullstack.counter.actions.CountState
 
 
 fun counterReducer(state: CountState = CountState(0, 0), action: RAction): CountState = when (action) {

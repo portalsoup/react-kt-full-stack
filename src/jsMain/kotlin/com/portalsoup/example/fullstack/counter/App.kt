@@ -1,8 +1,8 @@
-package counter
+package com.portalsoup.example.fullstack.counter
 
 import react.*
 import react.dom.div
-import counter.components.counterComponent
+import com.portalsoup.example.fullstack.counter.components.counterComponent
 import react.dom.h1
 import react.router.dom.*
 

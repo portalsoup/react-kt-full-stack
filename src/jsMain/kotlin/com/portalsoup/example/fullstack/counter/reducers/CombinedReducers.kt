@@ -1,8 +1,8 @@
-package counter.reducers
+package com.portalsoup.example.fullstack.counter.reducers
 
 import redux.Reducer
 import redux.combineReducers
-import counter.actions.CountState
+import com.portalsoup.example.fullstack.counter.actions.CountState
 import kotlin.reflect.KProperty1
 
 data class State(

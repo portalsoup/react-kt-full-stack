@@ -1,0 +1,15 @@
+{
+  "hostname": "localhost",
+  "server": {
+    "publicIP": "127.0.0.1",
+    "publicPort": 8080
+  },
+  "db": {
+    "username": "primary",
+    "password": "changeme123!",
+    "jdbcUrl": "jdbc:h2:./database/app",
+    "driverClassName": "org.h2.Driver",
+    "isAutoCommit": true,
+    "maximumPoolSize": 32
+  }
+}

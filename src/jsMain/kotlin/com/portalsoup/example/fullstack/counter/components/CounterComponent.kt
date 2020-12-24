@@ -1,12 +1,12 @@
-package counter.components
+package com.portalsoup.example.fullstack.counter.components
 
 import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.*
 import react.redux.rConnect
 import redux.WrapperAction
-import counter.actions.CountActions
-import counter.reducers.State
+import com.portalsoup.example.fullstack.counter.actions.CountActions
+import com.portalsoup.example.fullstack.counter.reducers.State
 
 interface CounterProps: RProps {
     var current: Int
@@ -58,11 +58,11 @@ LinkProps The props from the connected component (in this case Link).
  */
 val counterComponent: RClass<CounterProps> =
     rConnect<State, CountActions, WrapperAction, RProps, CounterStateProps, CounterDispatchProps, CounterProps>(
-        mapStateToProps = { state, ownProps ->
+        mapStateToProps = { state, _ ->
             current = state.count.current
             previous = state.count.previous
         },
-        mapDispatchToProps = { dispatch, ownProps ->
+        mapDispatchToProps = { dispatch, _ ->
             incrementCount = { dispatch(CountActions.IncrementCount)}
             decrementCount = { dispatch(CountActions.DecrementCount)}
         }
