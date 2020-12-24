@@ -15,9 +15,6 @@ fun HTML.index() {
     }
     body {
         div {
-            +"Hello from Ktor"
-        }
-        div {
             id = "root"
         }
         script(src = "/static/output.js") {}

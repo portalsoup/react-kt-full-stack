@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="travel-blog-js-1.0-SNAPSHOT">
+    <output-path>$PROJECT_DIR$/build/libs</output-path>
+    <root id="archive" name="travel-blog-js-1.0-SNAPSHOT.jar">
+      <element id="module-output" name="travel-blog.jsMain" />
+    </root>
+  </artifact>
+</component>

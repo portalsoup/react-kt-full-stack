@@ -1,3 +1,3 @@
 
-rootProject.name = "travel-blog"
+rootProject.name = "react-kt-full-stack"
 
