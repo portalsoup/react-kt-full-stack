@@ -66,6 +66,7 @@ hs_err_pid*
 /out/
 /build/
 **/node_modules/
+database
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
