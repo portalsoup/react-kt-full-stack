@@ -15,8 +15,12 @@ object CounterService {
             }
         }
 
-        return rawResult.takeIf { it.isSuccess }?.let {
-            it.getOrNull() ?: transaction { createCount(name) }
+        println("Raw result:\n$rawResult")
+
+        return rawResult
+            .takeIf { it.isSuccess }
+            ?.getOrNull()
+            ?: transaction { createCount(name)
         }
     }
 

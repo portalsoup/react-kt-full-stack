@@ -6,7 +6,7 @@ import com.portalsoup.example.fullstack.counter.actions.CountState
 import kotlin.reflect.KProperty1
 
 data class State(
-    val count: CountState = CountState(0, 0)
+    val count: CountState = CountState("", 0, 0)
 )
 
 fun combinedReducers() = combineReducers(
@@ -14,7 +14,6 @@ fun combinedReducers() = combineReducers(
         State::count to ::counterReducer
     )
 )
-
 
 // Helper methods
 

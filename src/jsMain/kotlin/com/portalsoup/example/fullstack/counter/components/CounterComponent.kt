@@ -5,14 +5,20 @@ import react.*
 import react.dom.*
 import react.redux.rConnect
 import redux.WrapperAction
-import com.portalsoup.example.fullstack.counter.actions.CountActions
+import com.portalsoup.example.fullstack.counter.actions.CounterDispatch
+import com.portalsoup.example.fullstack.counter.actions.CounterDispatch.*
 import com.portalsoup.example.fullstack.counter.reducers.State
+import kotlinx.browser.document
+import kotlinx.html.id
+import kotlinx.html.js.onChangeFunction
 
 interface CounterProps: RProps {
+    var name: String
     var current: Int
     var previous: Int
     var incrementCount: () -> Unit
     var decrementCount: () -> Unit
+    var loadCount: () -> Unit
 }
 
 private class Counter(props: CounterProps): RComponent<CounterProps, RState>(props) {
@@ -21,6 +27,16 @@ private class Counter(props: CounterProps): RComponent<CounterProps, RState>(pro
             h1 { +"Counter:" }
 
             p { +"Current: ${props.current}\tPrevious: ${props.previous}" }
+
+            input {
+                attrs.id = "name-input"
+                attrs.onChangeFunction = {
+                    val newValue = document.getElementById("name-input")?.nodeValue
+                    println("new value $newValue")
+                    props.name = newValue ?: ""
+                }
+                label { +"Name" }
+            }
 
             button {
                 attrs.onClickFunction = { props.incrementCount() }
@@ -36,6 +52,7 @@ private class Counter(props: CounterProps): RComponent<CounterProps, RState>(pro
 }
 
 interface CounterStateProps: RProps {
+    var name: String
     var current: Int
     var previous: Int
 }
@@ -43,6 +60,7 @@ interface CounterStateProps: RProps {
 interface CounterDispatchProps: RProps {
     var incrementCount: () -> Unit
     var decrementCount: () -> Unit
+    var loadCount: () -> Unit
 }
 
 /**
@@ -57,13 +75,15 @@ LinkDispatchProps These are the props from the connected component (in this case
 LinkProps The props from the connected component (in this case Link).
  */
 val counterComponent: RClass<CounterProps> =
-    rConnect<State, CountActions, WrapperAction, RProps, CounterStateProps, CounterDispatchProps, CounterProps>(
+    rConnect<State, CounterDispatch, WrapperAction, RProps, CounterStateProps, CounterDispatchProps, CounterProps>(
         mapStateToProps = { state, _ ->
             current = state.count.current
             previous = state.count.previous
+            name = state.count.name
         },
-        mapDispatchToProps = { dispatch, _ ->
-            incrementCount = { dispatch(CountActions.IncrementCount)}
-            decrementCount = { dispatch(CountActions.DecrementCount)}
+        mapDispatchToProps = { _, _ ->
+            incrementCount = { IncrementCount.action()}
+            decrementCount = { DecrementCount.action() }
+            loadCount = { LoadCount.action()}
         }
     )(Counter::class.js.unsafeCast<RClass<CounterProps>>())
