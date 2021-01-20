@@ -13,8 +13,6 @@ import kotlin.js.Promise
 
 // https://medium.com/@ralf.stuckert/getting-started-with-kotlin-react-part-iii-c316573e0abb
 
-data class CounterPathParams(val name: String): RProps
-
 sealed class CountActions: RAction {
     data class IncrementCount(val newState: CountState): CountActions()
     data class DecrementCount(val newState: CountState): CountActions()
@@ -22,39 +20,35 @@ sealed class CountActions: RAction {
 
 sealed class CounterDispatch {
 
-    abstract fun action(): Promise<CountState>
-
-    protected val name: () -> String =
-        { useParams<CounterPathParams>()?.name ?: throw RuntimeException() }
-
+    abstract fun action(name: String): Promise<CountState>
 
     object IncrementCount : CounterDispatch() {
-        override fun action(): Promise<CountState> {
+        override fun action(name: String): Promise<CountState> {
 
-            return axios.get<CounterResource>("/counter/${name()}/increment")
+            return axios.get<CounterResource>("/counter/${name}/increment")
                 .then { it.toResource() }
                 .then { store.dispatch(CountActions.IncrementCount(it)) }
         }
     }
 
     object DecrementCount : CounterDispatch() {
-        override fun action(): Promise<CountState> {
+        override fun action(name: String): Promise<CountState> {
             println("Decrementing")
-            return axios.get<CounterResource>("/counter/${name()}/decrement")
+            return axios.get<CounterResource>("/counter/${name}/decrement")
                 .then { it.toResource() }
         }
     }
 
     object LoadCount : CounterDispatch() {
-        override fun action(): Promise<CountState> {
+        override fun action(name: String): Promise<CountState> {
             URL(document.URL).searchParams
             println("Loading")
-            return axios.get<CounterResource>("/counter/${name()}")
+            return axios.get<CounterResource>("/counter/${name}")
                 .then { it.toResource() }
         }
     }
 }
 
-data class CountState(val name: String, val current: Int, val previous: Int)
+data class CountState(val current: Int, val previous: Int)
 
-fun CounterResource.toResource(): CountState = CountState(name, count, 0)
+fun CounterResource.toResource(): CountState = CountState(count, 0)

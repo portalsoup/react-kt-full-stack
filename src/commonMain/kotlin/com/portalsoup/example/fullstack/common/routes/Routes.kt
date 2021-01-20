@@ -9,7 +9,7 @@ enum class PathVariables(val value: PathSegment.VariableSegment) {
 // Routes to pages used by react router
 enum class ViewRoutes(vararg val segments: PathSegment) {
     HOME(static("/")),
-    COUNTER(static("/counter"), variable("name"))
+    COUNTER(static("counter"), variable("name"))
 }
 
 // Routes to apis served by ktor

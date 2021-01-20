@@ -7,13 +7,16 @@ import react.redux.rConnect
 import redux.WrapperAction
 import com.portalsoup.example.fullstack.counter.actions.CounterDispatch
 import com.portalsoup.example.fullstack.counter.actions.CounterDispatch.*
-import com.portalsoup.example.fullstack.counter.reducers.State
+import com.portalsoup.example.fullstack.redux.State
 import kotlinx.browser.document
 import kotlinx.html.id
 import kotlinx.html.js.onChangeFunction
+import react.router.dom.routeLink
+import react.router.dom.useParams
+
+data class CounterPathParams(val name: String): RProps
 
 interface CounterProps: RProps {
-    var name: String
     var current: Int
     var previous: Int
     var incrementCount: () -> Unit
@@ -28,16 +31,6 @@ private class Counter(props: CounterProps): RComponent<CounterProps, RState>(pro
 
             p { +"Current: ${props.current}\tPrevious: ${props.previous}" }
 
-            input {
-                attrs.id = "name-input"
-                attrs.onChangeFunction = {
-                    val newValue = document.getElementById("name-input")?.nodeValue
-                    println("new value $newValue")
-                    props.name = newValue ?: ""
-                }
-                label { +"Name" }
-            }
-
             button {
                 attrs.onClickFunction = { props.incrementCount() }
                 label { +"Increment" }
@@ -47,12 +40,12 @@ private class Counter(props: CounterProps): RComponent<CounterProps, RState>(pro
                 attrs.onClickFunction = { props.decrementCount() }
                 label { +"Decrement" }
             }
+            routeLink("/") { button { +"Go home" } }
         }
     }
 }
 
 interface CounterStateProps: RProps {
-    var name: String
     var current: Int
     var previous: Int
 }
@@ -79,11 +72,10 @@ val counterComponent: RClass<CounterProps> =
         mapStateToProps = { state, _ ->
             current = state.count.current
             previous = state.count.previous
-            name = state.count.name
         },
         mapDispatchToProps = { _, _ ->
-            incrementCount = { IncrementCount.action()}
-            decrementCount = { DecrementCount.action() }
-            loadCount = { LoadCount.action()}
+            incrementCount = { IncrementCount.action(useParams<CounterPathParams>()?.name ?: "anon")}
+            decrementCount = { DecrementCount.action(useParams<CounterPathParams>()?.name ?: "anon") }
+            loadCount = { LoadCount.action(useParams<CounterPathParams>()?.name ?: "anon")}
         }
     )(Counter::class.js.unsafeCast<RClass<CounterProps>>())
