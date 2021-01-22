@@ -2,13 +2,10 @@ package com.portalsoup.example.fullstack.actions
 
 import com.portalsoup.example.fullstack.common.resources.CounterResource
 import com.portalsoup.example.fullstack.jsdefs.Axios
-import com.portalsoup.example.fullstack.jsdefs.AxiosRequestConfig
 import com.portalsoup.example.fullstack.store
 import kotlinext.js.jsObject
 import redux.RAction
 import kotlin.js.Promise
-
-// https://medium.com/@ralf.stuckert/getting-started-with-kotlin-react-part-iii-c316573e0abb
 
 sealed class AppActions: RAction {
     data class SetName(val newState: AppState): AppActions()

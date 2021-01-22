@@ -12,11 +12,10 @@ object CounterService {
     fun recordForName(name: String): Try<Int> {
         updateCounter(name) { i -> i + 1 }
         return getCount(name)
-            ?.let { Try.Success(it) }
-            ?: Try.Failure()
+            .let { Try.Success(it) }
     }
 
-    private fun getCount(name: String): Int? {
+    private fun getCount(name: String): Int {
         val rawResult = transaction {
             kotlin.runCatching {
                 CounterTable.select { CounterTable.name eq name }.single()[CounterTable.count]
@@ -42,14 +41,14 @@ object CounterService {
     private fun updateCounter(name: String, changeF: (prev: Int) -> Int): Int {
         val maybePrevCount = getCount(name)
 
-        return maybePrevCount?.let { prevCount ->
-                transaction {
-                    prevCount.let { previousCount ->
-                        CounterTable.update({ CounterTable.name eq name }) {
-                            it[count] = changeF(previousCount)
-                        }
+        return maybePrevCount.let { prevCount ->
+            transaction {
+                prevCount.let { previousCount ->
+                    CounterTable.update({ CounterTable.name eq name }) {
+                        it[count] = changeF(previousCount)
                     }
                 }
-            } ?: createCount(name)
+            }
+        }
     }
 }

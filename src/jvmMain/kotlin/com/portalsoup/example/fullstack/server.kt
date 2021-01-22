@@ -1,8 +1,6 @@
 package com.portalsoup.example.fullstack
 
-import com.portalsoup.example.fullstack.business.CounterService
-import com.portalsoup.example.fullstack.common.resources.CounterResource
-import com.portalsoup.example.fullstack.utils.Try
+import com.portalsoup.example.fullstack.api.CounterApi.counter
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
@@ -12,7 +10,6 @@ import io.ktor.html.respondHtml
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.resources
 import io.ktor.http.content.static
-import io.ktor.response.respond
 import io.ktor.routing.Routing
 import io.ktor.routing.get
 import io.ktor.routing.route
@@ -34,16 +31,8 @@ fun Application.main() {
             static("/assets") {
                 resources()
             }
-
             route("/api") {
-
-                get("counter/{name}") {
-                    val name = call.parameters["name"] ?: throw RuntimeException("No valid name found.")
-                    when (val countForName = CounterService.recordForName(name)) {
-                        is Try.Success -> call.respond(CounterResource(name, countForName.data))
-                        is Try.Failure -> call.respond(500)
-                    }
-                }
+                counter()
             }
         }
     }

@@ -14,5 +14,3 @@ fun <T: Any> getClassForLogging(javaClass: Class<T>): Class<*> =
     javaClass.enclosingClass?.takeIf {
         it.kotlin.companionObject?.java == javaClass
     } ?: javaClass
-class LoggerUtils {
-}

@@ -64,7 +64,6 @@ hs_err_pid*
 
 # IntelliJ
 /out/
-/build/
 **/node_modules/
 database
 

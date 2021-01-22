@@ -17,5 +17,3 @@ class Counter(id: EntityID<Int>) : IntEntity(id) {
     var name by CounterTable.name
     var count by CounterTable.count
 }
-
-fun Counter.toResource(): CounterResource = CounterResource(name, count)

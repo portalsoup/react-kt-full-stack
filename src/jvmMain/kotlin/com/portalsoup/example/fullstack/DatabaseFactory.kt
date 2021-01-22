@@ -23,8 +23,6 @@ object DatabaseFactory: Logging {
         log().info("App initialization complete!")
     }
 
-    suspend fun <T> dbQuery(block: suspend () -> T): T = newSuspendedTransaction { block() }
-
     private fun hikari(appConfig: AppConfig): HikariDataSource {
         log().info("Initializating Hikari")
         val hikariConfig = HikariConfig()
@@ -39,7 +37,7 @@ object DatabaseFactory: Logging {
         return HikariDataSource(hikariConfig)
     }
 
-    fun migrateFlyway(flyway: Flyway, runAgain: Boolean = true) {
+    private fun migrateFlyway(flyway: Flyway, runAgain: Boolean = true) {
         log().info("Performing data migrations...")
         try {
 
