@@ -3,8 +3,7 @@ package com.portalsoup.example.fullstack
 import com.portalsoup.example.fullstack.common.routes.ApiRoutes
 import com.portalsoup.example.fullstack.common.routes.PathSegment
 import com.portalsoup.example.fullstack.common.routes.ViewRoutes
-import com.portalsoup.example.fullstack.counter.components.appComponent
-import com.portalsoup.example.fullstack.counter.components.counterComponent
+import com.portalsoup.example.fullstack.components.appComponent
 import kotlinx.browser.document
 import kotlinx.browser.window
 import react.redux.provider
@@ -12,15 +11,11 @@ import redux.RAction
 import redux.compose
 import redux.createStore
 import redux.rEnhancer
-import com.portalsoup.example.fullstack.redux.State
-import com.portalsoup.example.fullstack.redux.combinedReducers
-import kotlinx.html.id
-import kotlinx.html.js.onChangeFunction
-import org.w3c.dom.HTMLTextAreaElement
+import com.portalsoup.example.fullstack.reducers.State
+import com.portalsoup.example.fullstack.reducers.combinedReducers
 import react.dom.*
 import react.router.dom.browserRouter
 import react.router.dom.route
-import react.router.dom.routeLink
 import react.router.dom.switch
 
 fun ViewRoutes.toUrl(pathParams: Map<String, String>? = null): String {
@@ -65,9 +60,6 @@ fun main() {
                         switch {
                             route("/", exact = true) {
                                 appComponent {}
-                            }
-                            route("/counter/:name") {
-                                counterComponent {}
                             }
                         }
                     }

@@ -3,8 +3,10 @@ package com.portalsoup.example.fullstack
 import com.portalsoup.example.fullstack.business.CounterService
 import com.portalsoup.example.fullstack.common.routes.ApiRoutes
 import com.portalsoup.example.fullstack.common.routes.PathSegment
-import com.portalsoup.example.fullstack.common.routes.PathVariables
 import com.portalsoup.example.fullstack.common.routes.ViewRoutes
+import com.portalsoup.example.fullstack.utils.Try
+import com.portalsoup.example.fullstack.utils.Try.Failure
+import com.portalsoup.example.fullstack.utils.Try.Success
 import io.ktor.application.call
 import io.ktor.html.respondHtml
 import io.ktor.http.HttpStatusCode
@@ -15,6 +17,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.server.engine.*
 import kotlinx.html.*
+import kotlin.random.Random
 
 fun ViewRoutes.toUrl(): String = segments
     .joinToString("/") {
@@ -50,7 +53,6 @@ fun HTML.index() {
 
 fun main(args: Array<String>) {
 
-    // TODO This go on coroutine?
     Retrier("database initialization") {
         DatabaseFactory.init()
     }
@@ -65,26 +67,11 @@ fun main(args: Array<String>) {
             }
 
             get(ApiRoutes.GetCount.toUrl()) {
-                println("Getting count")
                 val name = call.parameters["name"] ?: throw RuntimeException("No valid name found.")
-                val count = CounterService.getCount(name)
-                println("found count: $count")
-                count?.let { call.respond("$count") }
-            }
-//
-            get(ApiRoutes.IncrementCount.toUrl()) {
-                println("Incrementing")
-                val name = call.parameters["name"] ?: throw RuntimeException("No valid name found.")
-                val count = CounterService.incrementCounter(name)
-                println("found count: $count")
-            }
-
-            get(ApiRoutes.DecrementCount.toUrl()) {
-                println("Decrementing")
-                val name = call.parameters["name"] ?: throw RuntimeException("No valid name found.")
-                val count = CounterService.decrementCounter(name)
-                println("found count: $count")
-
+                when (val countForName = CounterService.recordForName(name)) {
+                    is Success -> call.respond("${countForName.data}")
+                    is Failure -> call.respond(500)
+                }
             }
         }
     }.start(wait = true)}

@@ -1,12 +1,20 @@
 package com.portalsoup.example.fullstack.business
 
 import com.portalsoup.example.fullstack.db.entity.CounterTable
+import com.portalsoup.example.fullstack.utils.Try
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 
 object CounterService {
+
+    fun recordForName(name: String): Try<Int> {
+        incrementCounter(name)
+        return getCount(name)
+            ?.let { Try.Success(it) }
+            ?: Try.Failure()
+    }
 
     fun getCount(name: String): Int? {
         val rawResult = transaction {

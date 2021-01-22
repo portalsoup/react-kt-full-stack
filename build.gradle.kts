@@ -47,6 +47,7 @@ kotlin {
                 }
             }
         }
+        useCommonJs()
     }
     sourceSets {
         val commonMain by getting

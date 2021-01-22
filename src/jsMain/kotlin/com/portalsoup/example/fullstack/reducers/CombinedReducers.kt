@@ -1,21 +1,16 @@
-package com.portalsoup.example.fullstack.redux
+package com.portalsoup.example.fullstack.reducers
 
 import com.portalsoup.example.fullstack.Apper.actions.AppState
 import redux.Reducer
 import redux.combineReducers
-import com.portalsoup.example.fullstack.counter.actions.CountState
-import com.portalsoup.example.fullstack.counter.reducers.appReducer
-import com.portalsoup.example.fullstack.counter.reducers.counterReducer
 import kotlin.reflect.KProperty1
 
 data class State(
-    val count: CountState = CountState(0, 0),
-    val appState: AppState = AppState("anon")
+    val appState: AppState = AppState("anon", 0)
 )
 
 fun combinedReducers() = combineReducers(
     mapOf(
-        State::count to ::counterReducer,
         State::appState to ::appReducer
     )
 )
