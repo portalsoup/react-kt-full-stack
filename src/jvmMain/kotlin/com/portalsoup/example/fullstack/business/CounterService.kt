@@ -10,20 +10,18 @@ import org.jetbrains.exposed.sql.update
 object CounterService {
 
     fun recordForName(name: String): Try<Int> {
-        incrementCounter(name)
+        updateCounter(name) { i -> i + 1 }
         return getCount(name)
             ?.let { Try.Success(it) }
             ?: Try.Failure()
     }
 
-    fun getCount(name: String): Int? {
+    private fun getCount(name: String): Int? {
         val rawResult = transaction {
             kotlin.runCatching {
                 CounterTable.select { CounterTable.name eq name }.single()[CounterTable.count]
             }
         }
-
-        println("Raw result:\n$rawResult")
 
         return rawResult
             .takeIf { it.isSuccess }
@@ -39,14 +37,6 @@ object CounterService {
                 it[count] = 0
             }
         }[CounterTable.count]
-    }
-
-    fun incrementCounter(name: String): Int {
-        return updateCounter(name) { i -> i + 1 }
-    }
-
-    fun decrementCounter(name: String): Int {
-        return updateCounter(name) { i -> i - 1 }
     }
 
     private fun updateCounter(name: String, changeF: (prev: Int) -> Int): Int {

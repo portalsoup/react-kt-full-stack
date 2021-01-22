@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform") version "1.4.20"
@@ -114,7 +115,7 @@ kotlin {
 }
 
 application {
-    mainClassName = "com.portalsoup.example.fullstack.ServerKt"
+    mainClassName = "com.portalsoup.example.fullstack.MainKt"
 }
 
 tasks.getByName<KotlinWebpack>("jsBrowserProductionWebpack") {
@@ -136,4 +137,7 @@ flyway {
     url = "jdbc:h2:./database/app"
     user = "primary"
     password = "password123!"
+}
+dependencies {
+    implementation(kotlin("stdlib-jdk8"))
 }

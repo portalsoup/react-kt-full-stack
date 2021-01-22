@@ -1,8 +1,10 @@
-package com.portalsoup.example.fullstack.Apper.actions
+package com.portalsoup.example.fullstack.actions
 
-import axios
+import com.portalsoup.example.fullstack.common.resources.CounterResource
 import com.portalsoup.example.fullstack.jsdefs.Axios
+import com.portalsoup.example.fullstack.jsdefs.AxiosRequestConfig
 import com.portalsoup.example.fullstack.store
+import kotlinext.js.jsObject
 import redux.RAction
 import kotlin.js.Promise
 
@@ -27,9 +29,14 @@ sealed class AppDispatch {
 
     object SaveName: AppDispatch() {
         override fun action(name: String): Promise<AppState> {
-            return Axios.get<Int>("/api/counter/$name").then {
+            val config: dynamic = jsObject()
+            val headers: dynamic = jsObject()
+            headers["Accept"] = "application/json"
+            config.headers = headers
+
+            return Axios.get<CounterResource>("/api/counter/$name", config = config).then {
                 println("About to dispatch ${it.data}")
-                store.dispatch(AppActions.SaveName(AppState(name, it.data)))
+                store.dispatch(AppActions.SaveName(AppState(it.data.name, it.data.count)))
             }
         }
     }

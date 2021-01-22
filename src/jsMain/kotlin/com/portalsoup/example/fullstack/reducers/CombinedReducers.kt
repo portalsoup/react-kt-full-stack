@@ -1,6 +1,6 @@
 package com.portalsoup.example.fullstack.reducers
 
-import com.portalsoup.example.fullstack.Apper.actions.AppState
+import com.portalsoup.example.fullstack.actions.AppState
 import redux.Reducer
 import redux.combineReducers
 import kotlin.reflect.KProperty1

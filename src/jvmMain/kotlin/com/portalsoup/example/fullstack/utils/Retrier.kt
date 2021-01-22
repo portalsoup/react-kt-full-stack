@@ -1,4 +1,4 @@
-package com.portalsoup.example.fullstack
+package com.portalsoup.example.fullstack.utils
 
 import java.lang.Exception
 import java.lang.RuntimeException

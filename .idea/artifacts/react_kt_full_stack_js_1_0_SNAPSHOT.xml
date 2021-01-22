@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="react-kt-full-stack-js-1.0-SNAPSHOT">
-    <output-path>$PROJECT_DIR$/build/libs</output-path>
-    <root id="archive" name="react-kt-full-stack-js-1.0-SNAPSHOT.jar">
-      <element id="module-output" name="react-kt-full-stack.jsMain" />
-    </root>
-  </artifact>
-</component>

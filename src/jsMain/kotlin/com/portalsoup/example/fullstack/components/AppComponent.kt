@@ -1,9 +1,7 @@
 package com.portalsoup.example.fullstack.components
 
-import com.portalsoup.example.fullstack.Apper.actions.AppDispatch
-import com.portalsoup.example.fullstack.common.routes.ViewRoutes
+import com.portalsoup.example.fullstack.actions.AppDispatch
 import com.portalsoup.example.fullstack.reducers.State
-import com.portalsoup.example.fullstack.toUrl
 import kotlinx.html.id
 import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
@@ -11,7 +9,6 @@ import org.w3c.dom.HTMLTextAreaElement
 import react.*
 import react.dom.*
 import react.redux.rConnect
-import react.router.dom.routeLink
 import redux.WrapperAction
 
 interface AppProps: RProps {

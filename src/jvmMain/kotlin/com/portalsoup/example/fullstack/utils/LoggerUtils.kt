@@ -1,4 +1,4 @@
-package com.portalsoup.example.fullstack
+package com.portalsoup.example.fullstack.utils
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

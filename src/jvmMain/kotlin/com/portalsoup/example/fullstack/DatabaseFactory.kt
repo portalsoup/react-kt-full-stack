@@ -4,6 +4,8 @@ import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import com.portalsoup.example.fullstack.core.AppConfig
 import com.portalsoup.example.fullstack.core.Config
+import com.portalsoup.example.fullstack.utils.Logging
+import com.portalsoup.example.fullstack.utils.log
 import org.flywaydb.core.Flyway
 import org.flywaydb.core.api.FlywayException
 import org.jetbrains.exposed.sql.Database
