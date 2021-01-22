@@ -1,6 +1,6 @@
 All kotlin
 # Front end: 
-react + redux + react-router
+react + redux + react-router + axios
 
 # back end: 
 ktor + exposed + flywheel
